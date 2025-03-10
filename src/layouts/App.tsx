@@ -1,23 +1,34 @@
-import { useState } from "react";
+import { AppShell } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import AppHeader from "./AppHeader";
+import AppNavbar from "./AppNavbar";
+import { Outlet } from "react-router-dom";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [opened, { toggle }] = useDisclosure();
 
   return (
-    <>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <AppShell
+      header={{ height: 60 }}
+      navbar={{
+        width: 300,
+        breakpoint: "sm",
+        collapsed: { mobile: !opened },
+      }}
+      padding="md"
+    >
+      <AppShell.Header>
+        <AppHeader opened={opened} toggle={toggle} />
+      </AppShell.Header>
+
+      <AppShell.Navbar p="md">
+        <AppNavbar />
+      </AppShell.Navbar>
+
+      <AppShell.Main>
+        <Outlet />
+      </AppShell.Main>
+    </AppShell>
   );
 }
 

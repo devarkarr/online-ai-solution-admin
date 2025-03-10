@@ -1,0 +1,12 @@
+.containerFlex {
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
+
+  @media (min-width: 48rem) {
+    gap: calc(
+      var(--app-shell-navbar-width) + 1rem - 2.5rem - 76px
+    ); /* nav width + content padding - header padding - logo width */
+  }
+}
