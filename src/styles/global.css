@@ -1,0 +1,12 @@
+:root {
+  --color-admin: #2bdc9b;
+  --accent-info: #00a1ff;
+  --accent-success: #21c389;
+  --accent-warning: #e7a241;
+  --accent-warning-2: #eec14d;
+  --accent-busy: #f1b212;
+  --accent-lime: #bec208;
+  --accent-danger: #ff4d4d;
+  --accent-muted: #7d7d7d;
+  --accent-online: #2ec214;
+}
