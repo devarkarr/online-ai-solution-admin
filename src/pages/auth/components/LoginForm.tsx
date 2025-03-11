@@ -42,7 +42,9 @@ const LoginForm = () => {
         key={form.key("password")}
         {...form.getInputProps("password")}
       />
-      <Button type="submit">LOGIN</Button>
+      <Button type="submit" loading={login.isPending}>
+        LOGIN
+      </Button>
       <Text fz="sm" c="gray.7" ta="center">
         Forgot password?
       </Text>
