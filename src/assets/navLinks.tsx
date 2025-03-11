@@ -1,21 +1,15 @@
-import {
-  IconAdjustments,
-  IconCalendarStats,
-  IconInbox,
-  IconTicket,
-} from "@tabler/icons-react";
+import { IconCalendarStats, IconInbox, IconTicket } from "@tabler/icons-react";
 
 export const navLinks = [
-  { label: "In Query", icon: IconInbox, link: "in-query" },
+  { label: "Inquiries", icon: IconInbox, link: "in-quiries" },
   { label: "Event", icon: IconTicket, link: "event" },
   {
     label: "Projects",
     icon: IconCalendarStats,
     links: [
-      { label: "Ecommerce App", link: "ecommerce-app" },
-      { label: "Ecommerce Website", link: "ecommerce-website" },
-      { label: "Taxi App", link: "taxi-app" },
+      { label: "Ecommerce App", link: "/" },
+      { label: "Ecommerce Website", link: "/" },
+      { label: "Taxi App", link: "/" },
     ],
   },
-  { label: "Settings", icon: IconAdjustments, link: "settings" },
 ];

@@ -15,9 +15,8 @@ export default function Router() {
         <Route path="/login" element={<Login />} />
         <Route element={<RequiredAuth />}>
           <Route path="/" element={<App />}>
-            <Route path="in-query" element={<InQuery />} />
+            <Route path="in-quiries" element={<InQuery />} />
             <Route path="event" element={<Event />} />
-            <Route path="ecommerce-app" element={<InQuery />} />
           </Route>
         </Route>
       </Routes>
