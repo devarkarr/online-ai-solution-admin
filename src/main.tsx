@@ -56,11 +56,7 @@ const router = createBrowserRouter(
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <MantineProvider
-        theme={theme}
-        defaultColorScheme="light"
-        forceColorScheme="light"
-      >
+      <MantineProvider theme={theme} defaultColorScheme="auto">
         <RouterProvider router={router} />
       </MantineProvider>
     </QueryClientProvider>

@@ -1,0 +1,23 @@
+.nav {
+    background-color: light-dark(
+      var(--mantine-color-white),
+      var(--mantine-color-dark-6)
+    );
+  }
+  
+  .root {
+    height: 100vh;
+  }
+  
+  .main {
+    overflow: scroll;
+    background-color: light-dark(
+      var(--mantine-color-gray-2),
+      var(--mantine-color-dark-5)
+    );
+  }
+  
+  .content {
+    height: 100%;
+  }
+  
