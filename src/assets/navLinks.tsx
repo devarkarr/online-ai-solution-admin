@@ -5,7 +5,7 @@ import {
 } from "@tabler/icons-react";
 
 export const navLinks = [
-  { label: "Inbox", icon: IconInbox, link: "inbox" },
+  { label: "In Query", icon: IconInbox, link: "in-query" },
   {
     label: "Projects",
     icon: IconCalendarStats,

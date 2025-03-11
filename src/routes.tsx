@@ -4,7 +4,7 @@ import AppLoader from "./layouts/AppLoader";
 
 const App = lazy(() => import("@/layouts/App"));
 const Login = lazy(() => import("@/pages/auth/login"));
-const Inbox = lazy(() => import("@/pages/inbox"));
+const InQuery = lazy(() => import("@/pages/in-query"));
 
 export default function Router() {
   return (
@@ -12,8 +12,8 @@ export default function Router() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<App />}>
-          <Route path="inbox" element={<Inbox />} />
-          <Route path="ecommerce-app" element={<Inbox />} />
+          <Route path="in-query" element={<InQuery />} />
+          <Route path="ecommerce-app" element={<InQuery />} />
         </Route>
       </Routes>
     </Suspense>
