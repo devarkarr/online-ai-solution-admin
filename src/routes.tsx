@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import AppLoader from "./layouts/AppLoader";
 import RequiredAuth from "./pages/auth/required-auth";
+import NotFound from "./pages/errors/not-found";
 
 const App = lazy(() => import("@/layouts/App"));
 const Login = lazy(() => import("@/pages/auth/login"));
@@ -17,6 +18,7 @@ export default function Router() {
           <Route path="/" element={<App />}>
             <Route path="in-quiries" element={<InQuery />} />
             <Route path="event" element={<Event />} />
+            <Route path="/*" element={<NotFound />} />
           </Route>
         </Route>
       </Routes>

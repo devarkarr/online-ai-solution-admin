@@ -1,6 +1,6 @@
 import { useGetInQueries } from "@/store/server/inbox/queries";
 import InQueryCard from "./components/InQueryCard";
-import { Stack } from "@mantine/core";
+import { LoadingOverlay, Stack } from "@mantine/core";
 import { useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import InQueryModal from "./components/InQueryModal";
@@ -10,10 +10,18 @@ const InQuery = () => {
   const [activeId, setActiveId] = useState("");
   const [opened, modalToggle] = useDisclosure();
 
-  const { data } = useGetInQueries();
+  const { data, isPending, isError } = useGetInQueries();
   return (
     <>
       <Stack gap="xs">
+        {isPending ||
+          (isError && (
+            <LoadingOverlay
+              visible={isPending || isError}
+              zIndex={1000}
+              overlayProps={{ radius: "sm", blur: 2 }}
+            />
+          ))}
         {data?.map((inquery) => (
           <InQueryCard
             setActiveId={(id: string) => setActiveId(id)}

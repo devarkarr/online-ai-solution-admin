@@ -9,6 +9,7 @@ import {
   Group,
   Image,
   ScrollArea,
+  Skeleton,
   Stack,
   Text,
 } from "@mantine/core";
@@ -21,7 +22,7 @@ const Event = () => {
   const smallScreen = useMediaQuery("(max-width: 48em)");
   const [opened, eventToggle] = useDisclosure();
 
-  const { data: getEvents } = useGetEvents();
+  const { data: getEvents, isPending, isError } = useGetEvents();
   return (
     <>
       <ContentLayout>
@@ -35,6 +36,19 @@ const Event = () => {
           </Button>
         </Flex>
         <Grid mt="lg">
+          {isPending ||
+            (isError &&
+              new Array(6)
+                .fill(0)
+                .map((_, i) => (
+                  <Skeleton
+                    key={i}
+                    height={250}
+                    mt={6}
+                    width="70%"
+                    radius="sm"
+                  />
+                )))}
           {getEvents?.map((event) => (
             <Grid.Col span={smallScreen ? 12 : 4} key={event.id}>
               <Card shadow="xs" padding="md" radius="md" withBorder>

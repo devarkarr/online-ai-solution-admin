@@ -12,6 +12,9 @@ import {
 import { isNotEmpty, useForm } from "@mantine/form";
 import { DatePickerInput } from "@mantine/dates";
 import { IconUpload } from "@tabler/icons-react";
+import { useEventMutation } from "@/store/server/events/mutation";
+import { EventPayload } from "@/store/server/events/interface";
+import dayjs from "dayjs";
 
 type Props = {
   opened: boolean;
@@ -25,8 +28,8 @@ const CreateEventModal = ({ opened, close }: Props) => {
       detail: "",
       organization: "",
       image: null,
-      startDate: new Date(),
-      endDate: new Date(),
+      startDate: "",
+      endDate: "",
     },
 
     validate: {
@@ -39,9 +42,20 @@ const CreateEventModal = ({ opened, close }: Props) => {
     },
   });
 
+  const eventMutation = useEventMutation();
+  const onSubmit = (values: EventPayload) => {
+    eventMutation.mutate(values, {
+      onSuccess: (data) => {
+        if (data._metadata.statusCode === 201) {
+          form.reset();
+          close();
+        }
+      },
+    });
+  };
   return (
     <Modal opened={opened} onClose={close} title="New Event" centered size="lg">
-      <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
         <Grid>
           <Grid.Col span={6}>
             <TextInput
@@ -72,14 +86,18 @@ const CreateEventModal = ({ opened, close }: Props) => {
             <DatePickerInput
               label="Start Date"
               key={form.key("startDate")}
-              {...form.getInputProps("startDate")}
+              onChange={(e) =>
+                form.setFieldValue("startDate", dayjs(e).format("YYYY-MM-DD"))
+              }
             />
           </Grid.Col>
           <Grid.Col span={6}>
             <DatePickerInput
               label="End Date"
               key={form.key("endDate")}
-              {...form.getInputProps("endDate")}
+              onChange={(e) =>
+                form.setFieldValue("endDate", dayjs(e).format("YYYY-MM-DD"))
+              }
             />
           </Grid.Col>
           <Grid.Col>
@@ -91,7 +109,8 @@ const CreateEventModal = ({ opened, close }: Props) => {
               {(props) => (
                 <Flex
                   {...props}
-                  mih={250}
+                  justify='center'
+                  h={250}
                   bg={
                     form.errors.image
                       ? "var(--mantine-color-red-1)"
@@ -136,7 +155,9 @@ const CreateEventModal = ({ opened, close }: Props) => {
             <Button variant="outline" onClick={close}>
               Cancel
             </Button>
-            <Button type="submit">Save</Button>
+            <Button type="submit" loading={eventMutation.isPending}>
+              Save
+            </Button>
           </Flex>
         </Grid>
       </form>

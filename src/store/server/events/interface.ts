@@ -12,3 +12,12 @@ export interface EventType {
   updatedAt: string;
   files: { path: string }[];
 }
+
+export interface EventPayload {
+  name: string;
+  detail: string;
+  organization: string;
+  startDate: string;
+  endDate: string;
+  image: File | null;
+}
