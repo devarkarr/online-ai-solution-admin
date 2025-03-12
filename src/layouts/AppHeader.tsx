@@ -10,6 +10,7 @@ import Logo from "@/assets/logo.svg";
 import classes from "./styles/AppHeader.module.css";
 import { useNavigate } from "react-router-dom";
 import ThemeSwitch from "./ThemeSwitch";
+import UserProfile from "./UserProfile";
 type Props = {
   opened: boolean;
   toggle: () => void;
@@ -32,8 +33,9 @@ const AppHeader = ({ opened, toggle }: Props) => {
           </UnstyledButton>
         </Flex>
 
-        <Flex>
+        <Flex gap="xs" align="center">
           <ThemeSwitch />
+          <UserProfile />
         </Flex>
       </Flex>
     </Container>

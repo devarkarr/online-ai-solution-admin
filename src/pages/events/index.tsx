@@ -12,19 +12,25 @@ import {
   Stack,
   Text,
 } from "@mantine/core";
-import { useMediaQuery } from "@mantine/hooks";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { IconCalendar, IconPlus, IconUser } from "@tabler/icons-react";
 import dayjs from "dayjs";
+import CreateEventModal from "./components/CreateEventModal";
 
 const Event = () => {
   const smallScreen = useMediaQuery("(max-width: 48em)");
+  const [opened, eventToggle] = useDisclosure();
 
   const { data: getEvents } = useGetEvents();
   return (
     <>
       <ContentLayout>
         <Flex justify="end">
-          <Button size="xs" leftSection={<IconPlus size={18} />}>
+          <Button
+            size="xs"
+            onClick={eventToggle.open}
+            leftSection={<IconPlus size={18} />}
+          >
             New Event
           </Button>
         </Flex>
@@ -80,6 +86,7 @@ const Event = () => {
           ))}
         </Grid>
       </ContentLayout>
+      <CreateEventModal opened={opened} close={eventToggle.close} />
     </>
   );
 };
