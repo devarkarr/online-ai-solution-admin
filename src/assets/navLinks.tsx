@@ -8,7 +8,6 @@ export const navLinks = [
     icon: IconCalendarStats,
     links: [
       { label: "Show Case", link: "/show-case" },
-      { label: "Not Found", link: "/not-found" },
     ],
   },
 ];

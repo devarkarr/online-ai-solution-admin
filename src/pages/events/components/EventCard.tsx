@@ -29,19 +29,15 @@ const EventCard = ({ smallScreen, event }: Props) => {
   return (
     <>
       <Grid.Col span={smallScreen ? 12 : 4} key={event.id}>
-        <Card
-          onClick={eventToggle.open}
-          shadow="xs"
-          padding="md"
-          radius="md"
-          withBorder
-        >
-          <Card.Section>
+        <Card shadow="xs" padding="md" radius="md" withBorder>
+          <Card.Section onClick={eventToggle.open}>
             <Image src={event.files[0].path} height={160} alt="Norway" />
           </Card.Section>
 
           <Group justify="space-between" mt="md" mb="xs">
-            <Text fw={600}>{event.name}</Text>
+            <Text onClick={eventToggle.open} fw={600}>
+              {event.name}
+            </Text>
             <Badge
               color={
                 event.status == "ONGOING"
