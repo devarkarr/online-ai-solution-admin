@@ -7,9 +7,8 @@ export const navLinks = [
     label: "Projects",
     icon: IconCalendarStats,
     links: [
-      { label: "Ecommerce App", link: "/dd" },
-      { label: "Ecommerce Website", link: "/" },
-      { label: "Taxi App", link: "/" },
+      { label: "Show Case", link: "/show-case" },
+      { label: "Not Found", link: "/not-found" },
     ],
   },
 ];

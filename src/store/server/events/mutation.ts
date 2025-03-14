@@ -23,3 +23,22 @@ export const useEventMutation = () => {
     },
   });
 };
+
+const eventDelete = async (id: string) => {
+  const response = await axios.delete(`admin/event/${id}`, {
+    headers: authJsonHeader(),
+  });
+  return response.data;
+};
+
+export const useEventDelete = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => eventDelete(id),
+    onSuccess: (data) => {
+      console.log(data);
+      queryClient.invalidateQueries({ queryKey: ["get-events"] });
+      showToastNoti(data._metadata.message, "success");
+    },
+  });
+};
