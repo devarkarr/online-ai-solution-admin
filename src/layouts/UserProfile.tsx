@@ -26,7 +26,7 @@ const UserProfile = () => {
             variant="light"
             color="var(--accent-danger)"
           >
-            Login
+            Log out
           </Button>
         </Menu.Item>
       </Menu.Dropdown>
