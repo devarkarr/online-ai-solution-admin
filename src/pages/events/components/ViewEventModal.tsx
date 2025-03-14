@@ -27,7 +27,11 @@ const ViewEventModal = ({ opened, close, event }: Props) => {
       centered
       size="lg"
     >
-      <Image src={event.files[0].path} height={250} alt="Norway" />
+      <Image
+        src={event?.files.length ? event?.files[0]?.path : ""}
+        height={250}
+        alt="Norway"
+      />
 
       <Group justify="space-between" mt="md" mb="xs">
         <Text fw={600}>{event.name}</Text>

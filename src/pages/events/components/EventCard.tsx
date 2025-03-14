@@ -31,7 +31,11 @@ const EventCard = ({ smallScreen, event }: Props) => {
       <Grid.Col span={smallScreen ? 12 : 4} key={event.id}>
         <Card shadow="xs" padding="md" radius="md" withBorder>
           <Card.Section onClick={eventToggle.open}>
-            <Image src={event.files[0].path} height={160} alt="Norway" />
+            <Image
+              src={event?.files.length ? event?.files[0]?.path : ""}
+              height={160}
+              alt="Norway"
+            />
           </Card.Section>
 
           <Group justify="space-between" mt="md" mb="xs">
