@@ -1,0 +1,21 @@
+.rightSection {
+    border-left: 1px solid
+      light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+  }
+  
+  .input {
+    font-size: 0.875rem;
+    border: 1px solid
+      light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-4));
+  
+    &:focus-within {
+      border: 1px solid var(--mantine-color-fary-4);
+    }
+  }
+  
+  .searchButton {
+    &:hover {
+      background-color: transparent;
+    }
+  }
+  

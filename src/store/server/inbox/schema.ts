@@ -1,5 +1,5 @@
 import { z } from "zod";
-import getApiResponseSchema from "../common/getApiResponseSchema";
+import getApiDetailResponseSchema from "../common/getApiDetailResponseSchema";
 
 const InQuery = z.object({
   id: z.string(),
@@ -14,6 +14,7 @@ const InQuery = z.object({
   ratingDesc: z.string().nullish(),
   createdAt: z.string(),
   updatedAt: z.string(),
+  seen: z.boolean(),
 });
 
-export const InQuerySchema = getApiResponseSchema(z.array(InQuery));
+export const InQuerySchema = getApiDetailResponseSchema(z.array(InQuery));

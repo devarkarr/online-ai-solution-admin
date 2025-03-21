@@ -6,6 +6,7 @@ import { theme } from "./styles/theme.ts";
 import "@mantine/notifications/styles.css";
 import "@mantine/nprogress/styles.css";
 import "@mantine/dates/styles.css";
+import "mantine-datatable/styles.layer.css";
 import { NavigationProgress } from "@mantine/nprogress";
 import { Notifications } from "@mantine/notifications";
 import "./styles/global.css";

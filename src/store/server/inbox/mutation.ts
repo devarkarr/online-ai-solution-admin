@@ -19,3 +19,25 @@ export const useInQueriesDelete = () => {
     },
   });
 };
+
+const inquriesSeen = async (id: string) => {
+  const response = await axios.put(
+    `admin/user-inqury/${id}`,
+    {},
+    {
+      headers: authJsonHeader(),
+    }
+  );
+  return response.data;
+};
+
+export const useInQueriesSeen = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => inquriesSeen(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["get-inboxs"] });
+      queryClient.invalidateQueries({ queryKey: ["get-inboxs-total"] });
+    },
+  });
+};

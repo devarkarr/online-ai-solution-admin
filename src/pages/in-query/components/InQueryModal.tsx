@@ -28,7 +28,7 @@ const InQueryModal = ({ opened, close, data }: Props) => {
       <Flex gap={3} align="center">
         <Text fz="sm">User ID:</Text>
         <Text fz="sm" c="gray.6">
-          {data.id}
+          {data?.id}
         </Text>
       </Flex>
       <Box mt="md">
@@ -45,7 +45,7 @@ const InQueryModal = ({ opened, close, data }: Props) => {
               <IconUser size={17} />
               <Flex gap={5} align="center">
                 <Text fz="sm">Name:</Text>
-                <Text fz="sm">{data.name}</Text>
+                <Text fz="sm">{data?.name}</Text>
               </Flex>
             </Flex>
           </Grid.Col>
@@ -54,7 +54,7 @@ const InQueryModal = ({ opened, close, data }: Props) => {
               <IconMail size={17} />
               <Flex gap={5} align="center">
                 <Text fz="sm">Email:</Text>
-                <Text fz="sm">{data.email}</Text>
+                <Text fz="sm">{data?.email}</Text>
               </Flex>
             </Flex>
           </Grid.Col>
@@ -64,7 +64,7 @@ const InQueryModal = ({ opened, close, data }: Props) => {
               <IconPhone size={17} />
               <Flex gap={5} align="center">
                 <Text fz="sm">Phone:</Text>
-                <Text fz="sm">{data.phone}</Text>
+                <Text fz="sm">{data?.phone}</Text>
               </Flex>
             </Flex>
           </Grid.Col>
@@ -74,7 +74,7 @@ const InQueryModal = ({ opened, close, data }: Props) => {
               <IconLocation size={17} />
               <Flex gap={5} align="center">
                 <Text fz="sm">Country:</Text>
-                <Text fz="sm">{data.country}</Text>
+                <Text fz="sm">{data?.country}</Text>
               </Flex>
             </Flex>
           </Grid.Col>
@@ -94,7 +94,7 @@ const InQueryModal = ({ opened, close, data }: Props) => {
               <IconBuilding size={17} />
               <Flex gap={5} align="center">
                 <Text fz="sm">Company:</Text>
-                <Text fz="sm">{data.companyName}</Text>
+                <Text fz="sm">{data?.companyName}</Text>
               </Flex>
             </Flex>
           </Grid.Col>
@@ -103,7 +103,7 @@ const InQueryModal = ({ opened, close, data }: Props) => {
               <IconBriefcase size={17} />
               <Flex gap={5} align="center">
                 <Text fz="sm">Job:</Text>
-                <Text fz="sm">{data.jobTitle}</Text>
+                <Text fz="sm">{data?.jobTitle}</Text>
               </Flex>
             </Flex>
           </Grid.Col>
@@ -113,7 +113,7 @@ const InQueryModal = ({ opened, close, data }: Props) => {
               <IconStar size={17} />
               <Flex gap={5} align="center">
                 <Text fz="sm">Rating:</Text>
-                <Text fz="sm">{data.rating}</Text>
+                <Text fz="sm">{data?.rating}</Text>
               </Flex>
             </Flex>
           </Grid.Col>
@@ -129,7 +129,7 @@ const InQueryModal = ({ opened, close, data }: Props) => {
         mt="xs"
       >
         <ScrollArea h={150}>
-          <Text fz="xs">{data.jobDetail}</Text>
+          <Text fz="xs">{data?.jobDetail}</Text>
         </ScrollArea>
       </Box>
     </Modal>
