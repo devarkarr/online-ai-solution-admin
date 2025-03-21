@@ -7,9 +7,11 @@ type Props = {
   bg: string;
   border: string;
   img: string;
+  title: string;
+  des: string;
 };
 
-const ShowCaseCard = ({ bg, border, img }: Props) => {
+const ShowCaseCard = ({ bg, border, img, title, des }: Props) => {
   const [opened, showCaseToggle] = useDisclosure();
   return (
     <>
@@ -23,14 +25,9 @@ const ShowCaseCard = ({ bg, border, img }: Props) => {
       >
         <Image w="40%" fit="cover" src={img} alt={img} />
         <Box p="sm">
-          <Text fz="xl">Website Design for SCFC Canada</Text>
+          <Text fz="xl">{title}</Text>
           <Text mt="md" fz="sm" c="gray.7">
-            Born out of a vision, a single-minded objective that puts service
-            before anything else, Swift Clearance and Forwarding Corp. surging
-            forth to deliver the best services in the shipping and logistics
-            scenario. Its meteoric rise stems out of a solid foundation. The
-            management boasts of over 20 years of rich and varied experience in
-            the shipping and freight forwarding industry.
+            {des}
           </Text>
           <Button
             onClick={showCaseToggle.open}
@@ -45,6 +42,8 @@ const ShowCaseCard = ({ bg, border, img }: Props) => {
       <ViewShowCaseModal
         opened={opened}
         close={showCaseToggle.close}
+        title={title}
+        des={des}
         img={img}
       />
     </>
