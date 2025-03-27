@@ -1,14 +1,10 @@
 import { z } from "zod";
 import getApiDetailResponseSchema from "../common/getApiDetailResponseSchema";
 
-const eventSchema = z.object({
+const blogSchema = z.object({
   id: z.string().uuid(),
-  name: z.string(),
-  detail: z.string(),
-  startDate: z.string(),
-  endDate: z.string(),
-  status: z.enum(["ONGOING", "UPCOMING", "PREVIOUS"]),
-  organization: z.string(),
+  title: z.string(),
+  body: z.string(),
   createdById: z.string().uuid(),
   isDeleted: z.boolean(),
   createdAt: z.string(),
@@ -20,4 +16,4 @@ const eventSchema = z.object({
   ),
 });
 
-export const EventSchema = getApiDetailResponseSchema(z.array(eventSchema));
+export const BlogSchema = getApiDetailResponseSchema(z.array(blogSchema));

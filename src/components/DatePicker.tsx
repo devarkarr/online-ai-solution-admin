@@ -1,22 +1,22 @@
-import { Indicator, Styles } from "@mantine/core"
+import { Indicator, Styles } from "@mantine/core";
 import {
   DatePickerInput,
   DatePickerInputFactory,
   DatesRangeValue,
-} from "@mantine/dates"
-import { IconCalendarFilled } from "@tabler/icons-react"
-import dayjs from "dayjs"
-import classes from "./styles/DatePicker.module.css"
+} from "@mantine/dates";
+import { IconCalendarFilled } from "@tabler/icons-react";
+import dayjs from "dayjs";
+import classes from "./styles/DatePicker.module.css";
 
 interface DatePickerProps {
-  value: Array<Date | null> | undefined
-  setValue: (value: Date[] | DatesRangeValue) => void
-  styles?: Styles<DatePickerInputFactory>
-  iconSize?: number
+  value: Array<Date | null> | undefined;
+  setValue: (value: Date[] | DatesRangeValue) => void;
+  styles?: Styles<DatePickerInputFactory>;
+  iconSize?: number;
   /**
    * Expend the maximum select date range
    */
-  expendMaxDate?: number
+  expendMaxDate?: number;
 }
 
 export default function DatePicker({
@@ -35,7 +35,7 @@ export default function DatePicker({
         <IconCalendarFilled
           size={iconSize}
           style={{
-            color: "var(--color-fary)",
+            color: "var(--color-admin)",
           }}
         />
       }
@@ -43,30 +43,30 @@ export default function DatePicker({
       placeholder="Pick date"
       value={(() => {
         if (value && value.length > 1 && value[1] === null) {
-          return [value[0]] as Date[]
+          return [value[0]] as Date[];
         }
-        return value as Date[]
+        return value as Date[];
       })()}
       styles={styles}
       // size="xs"
       onChange={setValue}
-      radius="md"
+      radius="sm"
       miw="max-content"
       maxDate={new Date(dayjs(new Date()).add(expendMaxDate, "day").toDate())}
       classNames={{ input: classes.input }}
       maw={400}
       renderDay={(date) => {
-        const day = date.getDate()
-        const today = dayjs().date()
+        const day = date.getDate();
+        const today = dayjs().date();
 
-        const month = date.getMonth() + 1
-        const thisMonth = dayjs().month() + 1
+        const month = date.getMonth() + 1;
+        const thisMonth = dayjs().month() + 1;
 
-        const year = date.getFullYear()
-        const thisYear = dayjs().year()
+        const year = date.getFullYear();
+        const thisYear = dayjs().year();
 
-        const thisDay = `${day}-${month}-${year}`
-        const thisDate = `${today}-${thisMonth}-${thisYear}`
+        const thisDay = `${day}-${month}-${year}`;
+        const thisDate = `${today}-${thisMonth}-${thisYear}`;
 
         return (
           <Indicator
@@ -77,8 +77,8 @@ export default function DatePicker({
           >
             <div>{day}</div>
           </Indicator>
-        )
+        );
       }}
     />
-  )
+  );
 }

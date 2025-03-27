@@ -1,10 +1,10 @@
 import {
   Button,
+  Drawer,
   FileButton,
   Flex,
   Grid,
   Image,
-  Modal,
   Text,
   Textarea,
   TextInput,
@@ -54,7 +54,13 @@ const CreateEventModal = ({ opened, close }: Props) => {
     });
   };
   return (
-    <Modal opened={opened} onClose={close} title="New Event" centered size="lg">
+    <Drawer
+      opened={opened}
+      onClose={close}
+      position="right"
+      size="lg"
+      title="New Event"
+    >
       <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
         <Grid>
           <Grid.Col span={6}>
@@ -109,7 +115,7 @@ const CreateEventModal = ({ opened, close }: Props) => {
               {(props) => (
                 <Flex
                   {...props}
-                  justify='center'
+                  justify="center"
                   h={250}
                   bg={
                     form.errors.image
@@ -138,6 +144,9 @@ const CreateEventModal = ({ opened, close }: Props) => {
                       justify="center"
                       gap={4}
                       align="center"
+                      bg={
+                        "light-dark(var(--mantine-color-white),var(--mantine-color-gray-9))"
+                      }
                     >
                       <IconUpload
                         size={37}
@@ -161,7 +170,7 @@ const CreateEventModal = ({ opened, close }: Props) => {
           </Flex>
         </Grid>
       </form>
-    </Modal>
+    </Drawer>
   );
 };
 

@@ -1,10 +1,9 @@
 import axios, { authJsonHeader } from "@/api/axios";
 import { useQuery } from "@tanstack/react-query";
 import { InQuerySchema } from "./schema";
-import { InQueryPayload } from "./interface";
 import getParams from "@/utils/getParams";
 
-const getInQueries = async (payload: InQueryPayload) => {
+const getInQueries = async (payload: ApiPayload) => {
   console.log(payload);
   const params = getParams(payload);
   const response = await axios.get(`admin/user-inquries?${params}`, {
@@ -14,7 +13,7 @@ const getInQueries = async (payload: InQueryPayload) => {
   return InQuerySchema.parse(response.data);
 };
 
-export const useGetInQueries = (payload: InQueryPayload) =>
+export const useGetInQueries = (payload: ApiPayload) =>
   useQuery({
     queryKey: ["get-inboxs", payload],
     queryFn: () => getInQueries(payload),

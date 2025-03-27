@@ -1,19 +1,16 @@
-import {
-  useGetInQueries,
-  useGetInQueriesTotal,
-} from "@/store/server/inbox/queries";
+import { useGetInQueries } from "@/store/server/inbox/queries";
 import { useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import InQueryModal from "./components/InQueryModal";
 import { InQueryType } from "@/store/server/inbox/interface";
 import ContentLayout from "@/layouts/ContentLayout";
-import { Badge, Box, Flex, Tabs, Text } from "@mantine/core";
+import { Badge, Box, Flex, Text } from "@mantine/core";
 import classes from "./styles/Inquery.module.css";
 import useDatePicker from "@/hooks/useDatePicker";
 import usePage from "@/hooks/usePage";
 import { DataTable } from "mantine-datatable";
 import ActionButton from "@/components/ActionButton";
-import { IconEye, IconEyeOff, IconMenu4, IconTrash } from "@tabler/icons-react";
+import { IconEye, IconTrash } from "@tabler/icons-react";
 import DatePicker from "@/components/DatePicker";
 import SearchInput from "@/components/SearchInput";
 import useSearch from "@/hooks/useSearch";
@@ -51,10 +48,6 @@ const InQuery = () => {
     search: debouncedSearch,
   });
 
-  const { data: statusTotal } = useGetInQueriesTotal({
-    dateFilter,
-  });
-
   const inquriesDelete = useInQueriesDelete();
   const inquriesSeen = useInQueriesSeen();
 
@@ -62,76 +55,14 @@ const InQuery = () => {
     <>
       <Box className={classes.wrapper}>
         <Flex align="center" gap={10} className={classes.container}>
-          <Tabs variant="unstyled" defaultValue="all" classNames={classes}>
-            <Tabs.List>
-              <Tabs.Tab
-                value="all"
-                onClick={() => {
-                  setActiveId("");
-                  setCurrentTab("all");
-                }}
-                leftSection={<IconMenu4 size={12} />}
-              >
-                All
-                <Badge
-                  style={{
-                    transform: "translate(10px, -7px)",
-                    backgroundColor: "var(--color-admin)",
-                    color: "var(--color-white)",
-                  }}
-                >
-                  {statusTotal?.total}
-                </Badge>
-              </Tabs.Tab>
+          <DatePicker value={date} setValue={setDate} />
 
-              <Tabs.Tab
-                value="seen"
-                onClick={() => {
-                  setActiveId("");
-                  setCurrentTab("seen");
-                }}
-                leftSection={<IconEye size={12} />}
-              >
-                Seen
-                <Badge
-                  style={{
-                    transform: "translate(10px, -7px)",
-                    backgroundColor: "var(--color-admin)",
-                    color: "var(--color-white)",
-                  }}
-                >
-                  {statusTotal?.seen}
-                </Badge>
-              </Tabs.Tab>
-              <Tabs.Tab
-                value="unSeen"
-                onClick={() => {
-                  setActiveId("");
-                  setCurrentTab("unSeen");
-                }}
-                leftSection={<IconEyeOff size={12} />}
-              >
-                Unseen
-                <Badge
-                  style={{
-                    transform: "translate(10px, -7px)",
-                    backgroundColor: "var(--color-admin)",
-                    color: "var(--color-white)",
-                  }}
-                >
-                  {statusTotal?.unSeen}
-                </Badge>
-              </Tabs.Tab>
-            </Tabs.List>
-          </Tabs>
           <SearchInput
             setPayload={setFilteredPayload}
             search={search}
             setSearch={setSearch}
             placeholder="Search by country"
           />
-
-          <DatePicker value={date} setValue={setDate} />
         </Flex>
       </Box>
       <ContentLayout h="80vh">

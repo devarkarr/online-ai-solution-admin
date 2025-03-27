@@ -19,7 +19,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
+  padding: rem(4) var(--mantine-spacing-md);
   border-radius: var(--mantine-radius-sm);
 
   @mixin hover {
@@ -31,7 +31,7 @@
 }
 
 .activeLink {
-  background-color: #2bdc9b45;
+  background-color: light-dark(var(--mantine-color-admin-1), #f48d0644);
 }
 
 .link {

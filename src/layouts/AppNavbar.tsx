@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Collapse,
   Group,
   Stack,
@@ -7,25 +8,38 @@ import {
   ThemeIcon,
   UnstyledButton,
 } from "@mantine/core";
-import { IconChevronRight } from "@tabler/icons-react";
+import { IconChevronRight, IconLogout2 } from "@tabler/icons-react";
 import { useState } from "react";
 import classes from "./styles/AppNavbar.module.css";
 import { navLinks } from "@/assets/navLinks";
 import { Link } from "react-router-dom";
 import useCurrentNav from "@/hooks/useCurrentNav";
 import cx from "clsx";
+import useStore from "@/client-store/useStore";
 
 interface Props {}
 
 const AppNavbar = ({}: Props) => {
+  const { resetAuth } = useStore();
+
   const links = navLinks.map((item) => (
     <LinksGroup {...item} key={item.label} />
   ));
 
   return (
-    // <ScrollArea>
-    <Stack gap={3}>{links}</Stack>
-    // </ScrollArea>
+    <>
+      <Stack gap={3}>{links}</Stack>
+      <Button
+        onClick={() => resetAuth()}
+        w="100%"
+        mt="auto"
+        justify="start"
+        leftSection={<IconLogout2 />}
+        bg="var(--accent-danger)"
+      >
+        Logout
+      </Button>
+    </>
   );
 };
 
@@ -81,7 +95,7 @@ const LinksGroup = ({
               gap={0}
             >
               <Box style={{ display: "flex", alignItems: "center" }}>
-                <ThemeIcon variant="light" size={30}>
+                <ThemeIcon variant="transparent" size={30}>
                   <Icon size={18} />
                 </ThemeIcon>
                 <Box ml="md">{label}</Box>

@@ -1,49 +1,48 @@
 import ContentLayout from "@/layouts/ContentLayout";
-import { useGetEvents } from "@/store/server/events/queries";
-import { Avatar, Badge, Button, Flex, Loader, Text } from "@mantine/core";
+import { Avatar, Button, Flex, Loader, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconEye, IconPlus, IconTrash } from "@tabler/icons-react";
-import CreateEventDrawer from "./components/CreateEventDrawer";
+import CreateBlogDrawer from "./components/CreateBlogDrawer";
 import { DataTable } from "mantine-datatable";
 import ActionButton from "@/components/ActionButton";
 import usePage from "@/hooks/usePage";
-import dayjs from "dayjs";
 import ViewEventModal from "./components/ViewEventModal";
 import { Suspense, useState } from "react";
-import { EventType } from "@/store/server/events/interface";
 import ConfirmModal from "@/components/ConfirmModal";
-import { useEventDelete } from "@/store/server/events/mutation";
+import { useGetBlogs } from "@/store/server/blog/queries";
+import { BlogType } from "@/store/server/blog/interface";
+import { useBlogDelete } from "@/store/server/blog/mutation";
 
 const PAGE_SIZE = 10;
-const Event = () => {
-  const [opened, eventToggle] = useDisclosure();
+const Blog = () => {
+  const [opened, blogToggle] = useDisclosure();
   const [modalOpened, modalToggle] = useDisclosure();
   const [confirmOpened, confirmToggle] = useDisclosure();
-  const [currentEvent, setCurrentEvent] = useState<EventType | null>(null);
+  const [currentBlog, setCurrentBlog] = useState<BlogType | null>(null);
   const [deleteId, setDeleteId] = useState("");
 
   const [page, setPage] = usePage();
 
   const {
-    data: getEvents,
+    data: getBlogs,
     isPending,
     isError,
-  } = useGetEvents({
+  } = useGetBlogs({
     page,
     PAGE_SIZE,
   });
 
-  const eventDelete = useEventDelete();
+  const blogDelete = useBlogDelete();
 
   return (
     <>
       <Flex justify="end" mb="xs">
         <Button
           size="xs"
-          onClick={eventToggle.open}
+          onClick={blogToggle.open}
           leftSection={<IconPlus size={18} />}
         >
-          New Event
+          New Blog
         </Button>
       </Flex>
       <ContentLayout>
@@ -70,57 +69,15 @@ const Event = () => {
               ),
             },
             {
-              accessor: "name",
-              title: "Event Name",
-              render: ({ name }) => (
+              accessor: "title",
+              title: "Blog Title",
+              render: ({ title }) => (
                 <Text fw={600} lh={1.5}>
-                  {name || "-"}
+                  {title || "-"}
                 </Text>
               ),
             },
-            {
-              accessor: "organization",
-              title: "Organization",
-              render: ({ organization }) => (
-                <Text lh={1.5}>{organization || "-"}</Text>
-              ),
-            },
-            {
-              accessor: "startDate",
-              title: "Start Date",
-              render: ({ startDate }) => (
-                <>
-                  <Text>{dayjs(startDate).format("DD-MM-YYYY")}</Text>
-                </>
-              ),
-            },
-            {
-              accessor: "endDate",
-              title: "End Date",
-              render: ({ endDate }) => (
-                <>
-                  <Text>{dayjs(endDate).format("DD-MM-YYYY")}</Text>
-                </>
-              ),
-            },
-            {
-              accessor: "status",
-              textAlign: "center",
-              titleClassName: "table-header",
-              render: ({ status }) => (
-                <Badge
-                  color={
-                    status == "ONGOING"
-                      ? "var(--accent-online)"
-                      : status === "UPCOMING"
-                      ? "var(--accent-warning)"
-                      : "var(--accent-danger)"
-                  }
-                >
-                  {status}
-                </Badge>
-              ),
-            },
+
             {
               accessor: "action",
               title: "",
@@ -136,7 +93,7 @@ const Event = () => {
                         icon: <IconEye size={20} />,
                         color: "var(--color-admin)",
                         onClick() {
-                          setCurrentEvent(data);
+                          setCurrentBlog(data);
                           modalToggle.open();
                         },
                       },
@@ -156,9 +113,9 @@ const Event = () => {
               },
             },
           ]}
-          records={getEvents?.data || []}
+          records={getBlogs?.data || []}
           // Pagination
-          totalRecords={getEvents?.total || 0}
+          totalRecords={getBlogs?.total || 0}
           recordsPerPage={PAGE_SIZE}
           page={page}
           onPageChange={(p: number) => setPage(p)}
@@ -166,11 +123,11 @@ const Event = () => {
       </ContentLayout>
 
       <Suspense fallback={<Loader />}>
-        {currentEvent?.id && (
+        {currentBlog?.id && (
           <ViewEventModal
             opened={modalOpened}
             close={modalToggle.close}
-            event={currentEvent}
+            event={currentBlog}
           />
         )}
       </Suspense>
@@ -178,21 +135,21 @@ const Event = () => {
       <Suspense fallback={<Loader />}>
         {deleteId && (
           <ConfirmModal
-            loading={eventDelete.isPending}
+            loading={blogDelete.isPending}
             opened={confirmOpened}
             onClose={confirmToggle.close}
-            title="Delete this event"
+            title="Delete this blog"
             onSubmit={() => {
-              eventDelete.mutate(deleteId);
+              blogDelete.mutate(deleteId);
               confirmToggle.close();
             }}
           />
         )}
       </Suspense>
 
-      <CreateEventDrawer opened={opened} close={eventToggle.close} />
+      <CreateBlogDrawer opened={opened} close={blogToggle.close} />
     </>
   );
 };
 
-export default Event;
+export default Blog;

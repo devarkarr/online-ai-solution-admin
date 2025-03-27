@@ -10,3 +10,28 @@
     ); /* nav width + content padding - header padding - logo width */
   }
 }
+
+.activeLink {
+  background-color: var(--color-admin);
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-dark-0));
+}
+
+.link {
+  font-weight: 500;
+  display: block;
+  text-decoration: none;
+  /* border: rem(2) solid
+    light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-0)); */
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-xs);
+  font-size: var(--mantine-font-size-sm);
+  color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-0));
+  border-radius: var(--mantine-radius-sm);
+
+  @mixin hover {
+    background-color: light-dark(
+      var(--mantine-color-gray-0),
+      var(--mantine-color-dark-7)
+    );
+    color: light-dark(var(--mantine-color-black), var(--mantine-color-dark-0));
+  }
+}

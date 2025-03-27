@@ -3,7 +3,7 @@ import { useDisclosure } from "@mantine/hooks";
 import AppHeader from "./AppHeader";
 import AppNavbar from "./AppNavbar";
 import { Outlet } from "react-router-dom";
-import classes from "./styles/App.module.css"
+import classes from "./styles/App.module.css";
 
 function App() {
   const [opened, { toggle }] = useDisclosure();

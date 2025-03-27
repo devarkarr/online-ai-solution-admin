@@ -60,7 +60,7 @@ export default function SearchInput(props: Props) {
         placeholder="Search..."
         aria-label="Search"
         size="md"
-        radius="md"
+        radius="ms"
         miw={200}
         w={410}
         leftSection={<IconSearch size={16} />}
