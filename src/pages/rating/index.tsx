@@ -1,73 +1,21 @@
-import { useGetInQueries } from "@/store/server/inbox/queries";
-import { Suspense, useState } from "react";
-import { useDisclosure } from "@mantine/hooks";
-import InQueryModal from "./components/InQueryModal";
-import { InQueryType } from "@/store/server/inbox/interface";
 import ContentLayout from "@/layouts/ContentLayout";
-import { Badge, Box, Flex, Loader, Text } from "@mantine/core";
-import classes from "./styles/Inquery.module.css";
-import useDatePicker from "@/hooks/useDatePicker";
+import { Text, Tooltip } from "@mantine/core";
 import usePage from "@/hooks/usePage";
 import { DataTable } from "mantine-datatable";
-import ActionButton from "@/components/ActionButton";
-import { IconEye, IconTrash } from "@tabler/icons-react";
-import DatePicker from "@/components/DatePicker";
-import SearchInput from "@/components/SearchInput";
-import useSearch from "@/hooks/useSearch";
-import {
-  useInQueriesDelete,
-  useInQueriesSeen,
-} from "@/store/server/inbox/mutation";
-import ConfirmModal from "@/components/ConfirmModal";
+import { useGetRatings } from "@/store/server/rating/queries";
+import dayjs from "dayjs";
 
 const PAGE_SIZE = 10;
 const Rating = () => {
-  const [activeId, setActiveId] = useState("");
-  const [opened, modalToggle] = useDisclosure();
-  const [deleteId, setDeleteId] = useState("");
-  const [confirmOpened, confirmToggle] = useDisclosure();
-
-  const [currentTab, setCurrentTab] = useState("all");
-
   const [page, setPage] = usePage();
 
-  const { search, setSearch, setFilteredPayload, debouncedSearch } = useSearch({
-    page,
-    setPage,
-    PAGE_SIZE,
-  });
-
-  const { date, setDate, dateFilter } = useDatePicker({
-    page,
-    setPage,
-    defaultDate: [new Date(), null],
-  });
-
-  const { data, isPending, isError } = useGetInQueries({
+  const { data, isPending, isError } = useGetRatings({
     page,
     PAGE_SIZE,
-    dateFilter,
-    type: currentTab,
-    search: debouncedSearch,
   });
-
-  const inquriesDelete = useInQueriesDelete();
-  const inquriesSeen = useInQueriesSeen();
 
   return (
     <>
-      <Box className={classes.wrapper}>
-        <Flex align="center" gap={10} className={classes.container}>
-          <DatePicker value={date} setValue={setDate} />
-
-          <SearchInput
-            setPayload={setFilteredPayload}
-            search={search}
-            setSearch={setSearch}
-            placeholder="Search by country"
-          />
-        </Flex>
-      </Box>
       <ContentLayout h="80vh">
         <DataTable
           withRowBorders={false}
@@ -85,111 +33,57 @@ const Rating = () => {
           }}
           columns={[
             {
-              accessor: "name",
-              title: "Username",
-              render: ({ name }) => (
+              accessor: "ratedBy",
+              title: "Rated By",
+              render: ({ ratedBy }) => (
                 <Text fw={600} lh={1.5}>
-                  {name || "-"}
+                  {ratedBy || "-"}
                 </Text>
               ),
             },
             {
-              accessor: "country",
-              title: "Country",
-              render: ({ country }) => <Text lh={1.5}>{country || "-"}</Text>,
+              accessor: "rate",
+              title: "Rate",
+              render: ({ rate }) => <Text lh={1.5}>{rate || "-"}</Text>,
             },
             {
-              accessor: "email",
-              title: "Email",
-              render: ({ email }) => <Text lh={1.5}>{email || "-"}</Text>,
+              accessor: "feedback",
+              title: "feedback",
+              render: ({ feedback }) => (
+                <Tooltip
+                  label={feedback}
+                  bg="var(--color-admin)"
+                  c="white"
+                  position="top-start"
+                >
+                  <Text lh={1.5} truncate="end">
+                    {feedback || "-"}
+                  </Text>
+                </Tooltip>
+              ),
             },
             {
-              accessor: "phone",
-              title: "Phone",
-              render: ({ phone }) => <Text lh={1.5}>{phone || "-"}</Text>,
-            },
-
-            {
-              accessor: "jobTitle",
-              title: "Job Title",
-              render: ({ jobTitle }) => <Text lh={1.5}>{jobTitle || "-"}</Text>,
-            },
-
-            {
-              accessor: "status",
-              textAlign: "center",
-              titleClassName: "table-header",
-              render: ({ seen }) =>
-                seen ? (
-                  <Badge color="var(--color-admin)">Seen</Badge>
-                ) : (
-                  <Badge color="var(--accent-danger)">Unseen</Badge>
-                ),
-            },
-            {
-              accessor: "action",
-              title: "",
-              textAlign: "center",
-              width: "8%",
-              cellsStyle: () => ({ padding: 0 }),
-              render: (data) => {
-                return (
-                  <ActionButton
-                    buttons={[
-                      {
-                        title: "View Details",
-                        icon: <IconEye size={20} />,
-                        color: "var(--color-admin)",
-                        onClick() {
-                          setActiveId(data.id);
-                          modalToggle.open();
-                        },
-                      },
-                      {
-                        title: "Delete",
-                        icon: <IconTrash size={20} />,
-                        color: "var(--accent-danger)",
-                        onClick() {
-                          setDeleteId(data.id);
-                        },
-                      },
-                    ]}
-                    position="bottom-end"
-                  />
-                );
-              },
+              accessor: "date",
+              title: "Date",
+              render: ({ createdAt }) => (
+                <>
+                  <Text lh={1.5}>
+                    {dayjs(createdAt).format("DD-MM-YYYY") || "-"}
+                  </Text>
+                  <Text fz="sm" c="gray.6" lh={1.5}>
+                    {dayjs(createdAt).format("h:mm A") || "-"}
+                  </Text>
+                </>
+              ),
             },
           ]}
           records={data?.data || []}
-          // Pagination
           totalRecords={data?.total || 0}
           recordsPerPage={PAGE_SIZE}
           page={page}
           onPageChange={(p: number) => setPage(p)}
         />
       </ContentLayout>
-      {activeId && (
-        <InQueryModal
-          data={data?.data?.find((d) => d.id == activeId) as InQueryType}
-          opened={opened}
-          close={modalToggle.close}
-        />
-      )}
-
-      <Suspense fallback={<Loader />}>
-        {deleteId && (
-          <ConfirmModal
-            loading={inquriesDelete.isPending}
-            opened={confirmOpened}
-            onClose={confirmToggle.close}
-            title="Delete this inquirie"
-            onSubmit={() => {
-              inquriesDelete.mutate(deleteId);
-              confirmToggle.close();
-            }}
-          />
-        )}
-      </Suspense>
     </>
   );
 };

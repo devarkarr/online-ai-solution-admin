@@ -1,13 +1,13 @@
 import { InQueryType } from "@/store/server/inbox/interface";
-import { Box, Flex, Grid, Modal, ScrollArea, Text } from "@mantine/core";
 import {
-  IconBriefcase,
-  IconBuilding,
-  IconLocation,
-  IconMail,
-  IconPhone,
-  IconUser,
-} from "@tabler/icons-react";
+  Avatar,
+  Box,
+  Flex,
+  Grid,
+  Modal,
+  ScrollArea,
+  Text,
+} from "@mantine/core";
 
 type Props = {
   opened: boolean;
@@ -18,14 +18,27 @@ type Props = {
 const InQueryModal = ({ opened, close, data }: Props) => {
   return (
     <Modal
-      size="lg"
+      size="md"
       opened={opened}
       onClose={close}
       title="User Profile"
       p="lg"
     >
+      <Flex align="center">
+        <Avatar size="xl" />
+        <Box>
+          <Text fz="xl" fw={600}>
+            {data?.name}
+          </Text>
+          <Text fz="sm" c="gray.6">
+            Username
+          </Text>
+        </Box>
+      </Flex>
       <Box mt="md">
-        <Text>Information</Text>
+        <Text c="gray.6" fw={600}>
+          PERSONAL INFORMATION
+        </Text>
         <Grid
           mt="md"
           pb="xl"
@@ -34,47 +47,25 @@ const InQueryModal = ({ opened, close, data }: Props) => {
           }}
         >
           <Grid.Col span={6}>
-            <Flex gap={5} align="center">
-              <IconUser size={17} />
-              <Flex gap={5} align="center">
-                <Text fz="sm">Name:</Text>
-                <Text fz="sm">{data?.name}</Text>
-              </Flex>
-            </Flex>
-          </Grid.Col>
-          <Grid.Col span={6}>
-            <Flex gap={5} align="center">
-              <IconMail size={17} />
-              <Flex gap={5} align="center">
-                <Text fz="sm">Email:</Text>
-                <Text fz="sm">{data?.email}</Text>
-              </Flex>
-            </Flex>
+            <Text fz="sm">Email:</Text>
+            <Text fz="sm">{data?.email}</Text>
           </Grid.Col>
 
           <Grid.Col span={6}>
-            <Flex gap={5} align="center">
-              <IconPhone size={17} />
-              <Flex gap={5} align="center">
-                <Text fz="sm">Phone:</Text>
-                <Text fz="sm">{data?.phone}</Text>
-              </Flex>
-            </Flex>
+            <Text fz="sm">Phone:</Text>
+            <Text fz="sm">{data?.phone}</Text>
           </Grid.Col>
 
           <Grid.Col span={6}>
-            <Flex gap={5} align="center">
-              <IconLocation size={17} />
-              <Flex gap={5} align="center">
-                <Text fz="sm">Country:</Text>
-                <Text fz="sm">{data?.country}</Text>
-              </Flex>
-            </Flex>
+            <Text fz="sm">Country:</Text>
+            <Text fz="sm">{data?.country}</Text>
           </Grid.Col>
         </Grid>
       </Box>
       <Box mt="md">
-        <Text>Professional Information</Text>
+        <Text c="gray.6" fw={600}>
+          PROFESSIONAL INFORMATION
+        </Text>
         <Grid
           mt="md"
           pb="xl"
@@ -83,38 +74,22 @@ const InQueryModal = ({ opened, close, data }: Props) => {
           }}
         >
           <Grid.Col span={6}>
-            <Flex gap={5} align="center">
-              <IconBuilding size={17} />
-              <Flex gap={5} align="center">
-                <Text fz="sm">Company:</Text>
-                <Text fz="sm">{data?.companyName}</Text>
-              </Flex>
-            </Flex>
+            <Text fz="sm">Company:</Text>
+            <Text fz="sm">{data?.companyName}</Text>
           </Grid.Col>
           <Grid.Col span={6}>
-            <Flex gap={5} align="center">
-              <IconBriefcase size={17} />
-              <Flex gap={5} align="center">
-                <Text fz="sm">Job:</Text>
-                <Text fz="sm">{data?.jobTitle}</Text>
-              </Flex>
-            </Flex>
+            <Text fz="sm">Job:</Text>
+            <Text fz="sm">{data?.jobTitle}</Text>
           </Grid.Col>
         </Grid>
       </Box>
-      <Text mt="lg">Job Details</Text>
-      <Box
-        p="xs"
-        style={{
-          border: "1px solid var(--mantine-color-gray-3)",
-          borderRadius: "var(--mantine-radius-sm)",
-        }}
-        mt="xs"
-      >
-        <ScrollArea h={150}>
-          <Text fz="xs">{data?.jobDetail}</Text>
-        </ScrollArea>
-      </Box>
+      <Text mt="lg" c="gray.6" fw={600}>
+        JOB DETAILS
+      </Text>
+
+      <ScrollArea h={150} mt="sm">
+        <Text fz="sm">{data?.jobDetail}</Text>
+      </ScrollArea>
     </Modal>
   );
 };

@@ -1,41 +1,20 @@
 import axios, { authJsonHeader } from "@/api/axios";
 import { useQuery } from "@tanstack/react-query";
-import { InQuerySchema } from "./schema";
+import { RatingSchema } from "./schema";
 import getParams from "@/utils/getParams";
 
-const getInQueries = async (payload: ApiPayload) => {
-  console.log(payload);
+const getRatings = async (payload: ApiPayload) => {
   const params = getParams(payload);
-  const response = await axios.get(`admin/user-inquries?${params}`, {
+  const response = await axios.get(`admin/ratings?${params}`, {
     headers: authJsonHeader(),
   });
 
-  return InQuerySchema.parse(response.data);
+  return RatingSchema.parse(response.data);
 };
 
-export const useGetInQueries = (payload: ApiPayload) =>
+export const useGetRatings = (payload: ApiPayload) =>
   useQuery({
-    queryKey: ["get-inboxs", payload],
-    queryFn: () => getInQueries(payload),
-    select: (data) => data._data,
-  });
-
-const getInQueriesTotal = async ({
-  dateFilter,
-}: {
-  dateFilter?: string | null;
-}) => {
-  const params = dateFilter ? dateFilter : "";
-  const response = await axios.get(`admin/user-inquries/total?${params}`, {
-    headers: authJsonHeader(),
-  });
-
-  return response.data;
-};
-
-export const useGetInQueriesTotal = (payload: { dateFilter?: string | null }) =>
-  useQuery({
-    queryKey: ["get-inboxs-total", payload],
-    queryFn: () => getInQueriesTotal(payload),
+    queryKey: ["get-ratings", payload],
+    queryFn: () => getRatings(payload),
     select: (data) => data._data,
   });

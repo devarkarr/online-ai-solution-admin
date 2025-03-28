@@ -1,15 +1,8 @@
-export interface InQueryType {
+export interface RatingType {
   id: string;
-  name: string;
-  phone: string;
-  email: string;
-  companyName: string;
-  country: string;
-  jobTitle: string;
-  jobDetail: string;
-  rating: number;
-  ratingDesc?: string | null | undefined;
+  ratedBy: string;
+  feedback: string;
+  rate: number;
   createdAt: string;
   updatedAt: string;
-  seen: boolean;
 }

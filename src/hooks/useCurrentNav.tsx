@@ -19,23 +19,10 @@ export default function useCurrentNav() {
     const pathArray = pathname.split("/");
 
     let current = navLinks.find((nav) => {
-      if (nav.links?.length) {
-        return nav.links.find((l) => pathArray.includes(l.link));
-      }
-      if (nav.link) {
-        return pathArray.includes(nav.link);
-      }
+      return pathArray.includes(nav.link);
     });
 
-    if (current?.links?.length) {
-      const link = current.links.find((l) => pathArray.includes(l.link));
-      if (link) {
-        setCurrentNav(link);
-      }
-    } else {
-      //@ts-ignore
-      setCurrentNav(current);
-    }
+    setCurrentNav(current!);
   }, [pathname, navLinks]);
 
   return { currentNav };

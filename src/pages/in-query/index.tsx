@@ -4,7 +4,7 @@ import { useDisclosure } from "@mantine/hooks";
 import InQueryModal from "./components/InQueryModal";
 import { InQueryType } from "@/store/server/inbox/interface";
 import ContentLayout from "@/layouts/ContentLayout";
-import { Badge, Box, Flex, Loader, Select, Text } from "@mantine/core";
+import { Badge, Box, Flex, Loader, Select, Text, Tooltip } from "@mantine/core";
 import classes from "./styles/Inquery.module.css";
 import useDatePicker from "@/hooks/useDatePicker";
 import usePage from "@/hooks/usePage";
@@ -116,11 +116,7 @@ const InQuery = () => {
                 </Text>
               ),
             },
-            {
-              accessor: "country",
-              title: "Country",
-              render: ({ country }) => <Text lh={1.5}>{country || "-"}</Text>,
-            },
+
             {
               accessor: "email",
               title: "Email",
@@ -133,9 +129,42 @@ const InQuery = () => {
             },
 
             {
+              accessor: "country",
+              title: "Country",
+              render: ({ country }) => <Text lh={1.5}>{country || "-"}</Text>,
+            },
+            {
               accessor: "jobTitle",
               title: "Job Title",
-              render: ({ jobTitle }) => <Text lh={1.5}>{jobTitle || "-"}</Text>,
+              render: ({ jobTitle }) => (
+                <Tooltip
+                  label={jobTitle}
+                  bg="var(--color-admin)"
+                  c="white"
+                  position="top-start"
+                >
+                  <Text lh={1.5} truncate="end">
+                    {jobTitle || "-"}
+                  </Text>
+                </Tooltip>
+              ),
+            },
+
+            {
+              accessor: "jobDetail",
+              title: "Job Detail",
+              render: ({ jobDetail }) => (
+                <Tooltip
+                  label={jobDetail}
+                  bg="var(--color-admin)"
+                  c="white"
+                  position="top-start"
+                >
+                  <Text lh={1.5} truncate="end">
+                    {jobDetail || "-"}
+                  </Text>
+                </Tooltip>
+              ),
             },
 
             {
