@@ -1,7 +1,13 @@
-import { IconInbox, IconTicket } from "@tabler/icons-react";
+import {
+  IconArticle,
+  IconCalendarCheck,
+  IconChartBarPopular,
+  IconMessageReply,
+} from "@tabler/icons-react";
 
 export const navLinks = [
-  { label: "Inquiries", icon: IconInbox, link: "in-quiries" },
-  { label: "Event", icon: IconTicket, link: "event" },
-  { label: "Blog", icon: IconTicket, link: "blog" },
+  { label: "Inquiries", icon: IconMessageReply, link: "in-quiries" },
+  { label: "Rating", icon: IconChartBarPopular, link: "rating" },
+  { label: "Event", icon: IconCalendarCheck, link: "event" },
+  { label: "Blog", icon: IconArticle, link: "blog" },
 ];

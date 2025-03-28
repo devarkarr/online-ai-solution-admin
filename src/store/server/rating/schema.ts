@@ -10,6 +10,8 @@ const InQuery = z.object({
   country: z.string(),
   jobTitle: z.string(),
   jobDetail: z.string(),
+  rating: z.number(),
+  ratingDesc: z.string().nullish(),
   createdAt: z.string(),
   updatedAt: z.string(),
   seen: z.boolean(),

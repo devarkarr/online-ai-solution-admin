@@ -7,6 +7,8 @@ export interface InQueryType {
   country: string;
   jobTitle: string;
   jobDetail: string;
+  rating: number;
+  ratingDesc?: string | null | undefined;
   createdAt: string;
   updatedAt: string;
   seen: boolean;

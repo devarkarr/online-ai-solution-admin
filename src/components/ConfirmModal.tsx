@@ -14,6 +14,7 @@ interface ConfirmModalProps extends ModalProps {
   title: string;
   onSubmit: () => void;
   loading: boolean;
+  desc?: string;
 }
 
 const ConfirmModal = ({
@@ -22,14 +23,13 @@ const ConfirmModal = ({
   onClose,
   title,
   onSubmit,
+  desc = "You are about to delete this event. This action cannot be undone.",
 }: ConfirmModalProps) => {
   return (
     <Modal opened={opened} onClose={onClose} title={title} centered>
       <Box>
         <Flex>
-          <Text>
-            You are about to delete this event. This action cannot be undone.
-          </Text>
+          <Text>{desc}</Text>
         </Flex>
         <Group justify="end">
           <Button size="xs" variant="light">

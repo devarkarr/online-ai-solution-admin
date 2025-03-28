@@ -6,6 +6,7 @@ import {
   IconLocation,
   IconMail,
   IconPhone,
+  IconStar,
   IconUser,
 } from "@tabler/icons-react";
 
@@ -24,6 +25,12 @@ const InQueryModal = ({ opened, close, data }: Props) => {
       title="User Profile"
       p="lg"
     >
+      <Flex gap={3} align="center">
+        <Text fz="sm">User ID:</Text>
+        <Text fz="sm" c="gray.6">
+          {data?.id}
+        </Text>
+      </Flex>
       <Box mt="md">
         <Text>Information</Text>
         <Grid
@@ -97,6 +104,16 @@ const InQueryModal = ({ opened, close, data }: Props) => {
               <Flex gap={5} align="center">
                 <Text fz="sm">Job:</Text>
                 <Text fz="sm">{data?.jobTitle}</Text>
+              </Flex>
+            </Flex>
+          </Grid.Col>
+
+          <Grid.Col span={6}>
+            <Flex gap={5} align="center">
+              <IconStar size={17} />
+              <Flex gap={5} align="center">
+                <Text fz="sm">Rating:</Text>
+                <Text fz="sm">{data?.rating}</Text>
               </Flex>
             </Flex>
           </Grid.Col>

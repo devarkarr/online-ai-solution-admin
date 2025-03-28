@@ -4,6 +4,7 @@ import { InQuerySchema } from "./schema";
 import getParams from "@/utils/getParams";
 
 const getInQueries = async (payload: ApiPayload) => {
+  console.log(payload);
   const params = getParams(payload);
   const response = await axios.get(`admin/user-inquries?${params}`, {
     headers: authJsonHeader(),

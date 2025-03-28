@@ -7,6 +7,7 @@ import NotFound from "./pages/errors/not-found";
 const App = lazy(() => import("@/layouts/App"));
 const Login = lazy(() => import("@/pages/auth/login"));
 const InQuery = lazy(() => import("@/pages/in-query"));
+const Rating = lazy(() => import("@/pages/rating"));
 const Event = lazy(() => import("@/pages/events"));
 const Blog = lazy(() => import("@/pages/blog"));
 
@@ -18,6 +19,7 @@ export default function Router() {
         <Route element={<RequiredAuth />}>
           <Route path="/" element={<App />}>
             <Route path="in-quiries" element={<InQuery />} />
+            <Route path="rating" element={<Rating />} />
             <Route path="event" element={<Event />} />
             <Route path="blog" element={<Blog />} />
             <Route path="/*" element={<NotFound />} />

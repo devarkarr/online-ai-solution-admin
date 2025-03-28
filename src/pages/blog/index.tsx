@@ -1,17 +1,26 @@
 import ContentLayout from "@/layouts/ContentLayout";
-import { Avatar, Button, Flex, Loader, Text } from "@mantine/core";
+import {
+  Avatar,
+  Badge,
+  Button,
+  Flex,
+  Loader,
+  Text,
+  Tooltip,
+} from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconEye, IconPlus, IconTrash } from "@tabler/icons-react";
 import CreateBlogDrawer from "./components/CreateBlogDrawer";
 import { DataTable } from "mantine-datatable";
 import ActionButton from "@/components/ActionButton";
 import usePage from "@/hooks/usePage";
-import ViewEventModal from "./components/ViewEventModal";
+import ViewBlogModal from "./components/ViewBlogModal";
 import { Suspense, useState } from "react";
 import ConfirmModal from "@/components/ConfirmModal";
 import { useGetBlogs } from "@/store/server/blog/queries";
 import { BlogType } from "@/store/server/blog/interface";
 import { useBlogDelete } from "@/store/server/blog/mutation";
+import dayjs from "dayjs";
 
 const PAGE_SIZE = 10;
 const Blog = () => {
@@ -72,12 +81,37 @@ const Blog = () => {
               accessor: "title",
               title: "Blog Title",
               render: ({ title }) => (
-                <Text fw={600} lh={1.5}>
-                  {title || "-"}
-                </Text>
+                <Tooltip
+                  label={title}
+                  position="top-start"
+                  offset={5}
+                  bg="var(--color-admin)"
+                  c="white"
+                >
+                  <Text fw={600} lh={1.5} truncate="end">
+                    {title || "-"}
+                  </Text>
+                </Tooltip>
               ),
             },
-
+            {
+              accessor: "isDeleted",
+              title: "Is Deleted",
+              render: ({ isDeleted }) => (
+                <Badge color={isDeleted ? "var(--accent-danger)" : ""}>
+                  {isDeleted ? "Deleted" : "Not Deleted"}
+                </Badge>
+              ),
+            },
+            {
+              accessor: "createdAt",
+              title: "Created Date",
+              render: ({ createdAt }) => (
+                <>
+                  <Text>{dayjs(createdAt).format("DD-MM-YYYY")}</Text>
+                </>
+              ),
+            },
             {
               accessor: "action",
               title: "",
@@ -124,10 +158,10 @@ const Blog = () => {
 
       <Suspense fallback={<Loader />}>
         {currentBlog?.id && (
-          <ViewEventModal
+          <ViewBlogModal
             opened={modalOpened}
             close={modalToggle.close}
-            event={currentBlog}
+            blog={currentBlog}
           />
         )}
       </Suspense>

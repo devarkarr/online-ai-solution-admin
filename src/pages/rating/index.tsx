@@ -4,7 +4,7 @@ import { useDisclosure } from "@mantine/hooks";
 import InQueryModal from "./components/InQueryModal";
 import { InQueryType } from "@/store/server/inbox/interface";
 import ContentLayout from "@/layouts/ContentLayout";
-import { Badge, Box, Flex, Loader, Select, Text } from "@mantine/core";
+import { Badge, Box, Flex, Loader, Text } from "@mantine/core";
 import classes from "./styles/Inquery.module.css";
 import useDatePicker from "@/hooks/useDatePicker";
 import usePage from "@/hooks/usePage";
@@ -21,28 +21,13 @@ import {
 import ConfirmModal from "@/components/ConfirmModal";
 
 const PAGE_SIZE = 10;
-
-const Filters = [
-  {
-    label: "All",
-    value: "all",
-  },
-  {
-    label: "Seen",
-    value: "seen",
-  },
-  {
-    label: "Un Seen",
-    value: "unSeen",
-  },
-];
-const InQuery = () => {
+const Rating = () => {
   const [activeId, setActiveId] = useState("");
   const [opened, modalToggle] = useDisclosure();
   const [deleteId, setDeleteId] = useState("");
   const [confirmOpened, confirmToggle] = useDisclosure();
 
-  const [currentFilter, setCurrentFilter] = useState("all");
+  const [currentTab, setCurrentTab] = useState("all");
 
   const [page, setPage] = usePage();
 
@@ -62,7 +47,7 @@ const InQuery = () => {
     page,
     PAGE_SIZE,
     dateFilter,
-    type: currentFilter,
+    type: currentTab,
     search: debouncedSearch,
   });
 
@@ -75,14 +60,6 @@ const InQuery = () => {
         <Flex align="center" gap={10} className={classes.container}>
           <DatePicker value={date} setValue={setDate} />
 
-          <Select
-            size="md"
-            checkIconPosition="right"
-            data={Filters}
-            placeholder="Pick Type"
-            defaultValue="all"
-            onChange={(value) => setCurrentFilter(value!)}
-          />
           <SearchInput
             setPayload={setFilteredPayload}
             search={search}
@@ -165,7 +142,6 @@ const InQuery = () => {
                         color: "var(--color-admin)",
                         onClick() {
                           setActiveId(data.id);
-                          inquriesSeen.mutate(data.id);
                           modalToggle.open();
                         },
                       },
@@ -175,7 +151,6 @@ const InQuery = () => {
                         color: "var(--accent-danger)",
                         onClick() {
                           setDeleteId(data.id);
-                          confirmToggle.open();
                         },
                       },
                     ]}
@@ -208,7 +183,6 @@ const InQuery = () => {
             opened={confirmOpened}
             onClose={confirmToggle.close}
             title="Delete this inquirie"
-            desc="You are about to delete this inquirie. This action cannot be undone."
             onSubmit={() => {
               inquriesDelete.mutate(deleteId);
               confirmToggle.close();
@@ -220,4 +194,4 @@ const InQuery = () => {
   );
 };
 
-export default InQuery;
+export default Rating;
