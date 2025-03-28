@@ -4,17 +4,27 @@ import { useDisclosure } from "@mantine/hooks";
 import InQueryModal from "./components/InQueryModal";
 import { InQueryType } from "@/store/server/inbox/interface";
 import ContentLayout from "@/layouts/ContentLayout";
-import { Badge, Box, Flex, Loader, Select, Text, Tooltip } from "@mantine/core";
+import {
+  Badge,
+  Box,
+  Button,
+  Flex,
+  Loader,
+  Select,
+  Text,
+  Tooltip,
+} from "@mantine/core";
 import classes from "./styles/Inquery.module.css";
 import useDatePicker from "@/hooks/useDatePicker";
 import usePage from "@/hooks/usePage";
 import { DataTable } from "mantine-datatable";
 import ActionButton from "@/components/ActionButton";
-import { IconEye, IconTrash } from "@tabler/icons-react";
+import { IconEye, IconShare2, IconTrash } from "@tabler/icons-react";
 import DatePicker from "@/components/DatePicker";
 import SearchInput from "@/components/SearchInput";
 import useSearch from "@/hooks/useSearch";
 import {
+  useExportInqueryExcel,
   useInQueriesDelete,
   useInQueriesSeen,
 } from "@/store/server/inbox/mutation";
@@ -68,7 +78,7 @@ const InQuery = () => {
 
   const inquriesDelete = useInQueriesDelete();
   const inquriesSeen = useInQueriesSeen();
-
+  const exportInquries = useExportInqueryExcel();
   return (
     <>
       <Box className={classes.wrapper}>
@@ -89,6 +99,28 @@ const InQuery = () => {
             setSearch={setSearch}
             placeholder="Search by country"
           />
+          <Button
+            type="submit"
+            variant="filled"
+            color="var(--color-admin)"
+            miw={120}
+            size="compact-xl"
+            loading={exportInquries.isPending}
+            radius="sm"
+            fz={14}
+            rightSection={<IconShare2 />}
+            onClick={() => {
+              exportInquries.mutate({
+                page,
+                PAGE_SIZE,
+                dateFilter,
+                type: currentFilter,
+                search: debouncedSearch,
+              });
+            }}
+          >
+            Export
+          </Button>
         </Flex>
       </Box>
       <ContentLayout h="80vh">

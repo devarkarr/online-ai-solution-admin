@@ -1,4 +1,5 @@
 import axios, { authJsonHeader } from "@/api/axios";
+import getParams from "@/utils/getParams";
 import showToastNoti from "@/utils/showToastNoti";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -41,3 +42,29 @@ export const useInQueriesSeen = () => {
     },
   });
 };
+
+const exportInqueryExcel = async (payload: ApiPayload) => {
+  const params = getParams(payload);
+  const response = await axios.post(
+    `admin/user-inquries/excel?${params}`,
+    {},
+    {
+      headers: authJsonHeader(),
+    }
+  );
+
+  return response.data;
+};
+
+export const useExportInqueryExcel = () =>
+  useMutation({
+    mutationFn: (payload: ApiPayload) => exportInqueryExcel(payload),
+    onSuccess: (data) => {
+      const link = document.createElement("a");
+      link.href = data._data;
+      link.setAttribute("download", `user-inquries.xlsx`); //or any other extension
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    },
+  });
